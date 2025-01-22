@@ -1,0 +1,83 @@
+---- Minecraft Crash Report ----
+// eagler
+
+Time: 21.01.2025 14:49
+Description: Unexpected error
+
+java.lang.NullPointerException: Cannot invoke "java.util.List.size()" because "this.allItems" is null
+	at net.minecraft.client.gui.inventory.GuiInventory.drawJEI(GuiInventory.java:120)
+	at net.minecraft.client.gui.inventory.GuiInventory.initGui(GuiInventory.java:82)
+	at astra.ui.jei.JEIOverlayGUI.initGui(JEIOverlayGUI.java:37)
+	at net.minecraft.client.gui.GuiScreen.setWorldAndResolution(GuiScreen.java:540)
+	at net.minecraft.client.Minecraft.displayGuiScreen(Minecraft.java:615)
+	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1545)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:2190)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:1130)
+	at net.minecraft.client.main.Main.appMain(Main.java:35)
+	at net.lax1dude.eaglercraft.v1_8.internal.lwjgl.LWJGLEntryPoint.main_(LWJGLEntryPoint.java:74)
+	at net.lax1dude.eaglercraft.v1_8.internal.lwjgl.MainClass.main(MainClass.java:6)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at net.minecraft.client.gui.inventory.GuiInventory.drawJEI(GuiInventory.java:120)
+	at net.minecraft.client.gui.inventory.GuiInventory.initGui(GuiInventory.java:82)
+	at astra.ui.jei.JEIOverlayGUI.initGui(JEIOverlayGUI.java:37)
+	at net.minecraft.client.gui.GuiScreen.setWorldAndResolution(GuiScreen.java:540)
+	at net.minecraft.client.Minecraft.displayGuiScreen(Minecraft.java:615)
+	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1545)
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 1 total; [EntityPlayerSP['YeeishYigg3149'/0, l='MpServer', x=-226,76, y=80,87, z=462,20]]
+	Chunk stats: MultiplayerChunkCache: 81, 81
+	Level seed: 0
+	Level generator: ID 00 - default, ver 1. Features enabled: false
+	Level generator options: 
+	Level spawn location: -208,00,64,00,248,00 - World: (-208,64,248), Chunk: (at 0,4,8 in -13,15; contains blocks -208,0,240 to -193,255,255), Region: (-1,0; contains chunks -32,0 to -1,31, blocks -512,0,0 to -1,255,511)
+	Level time: 67360 game time, 67360 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+	Forced entities: 2 total; [EntityPlayerSP['YeeishYigg3149'/0, l='MpServer', x=-226,76, y=80,87, z=462,20], EntitySkeleton['Skeleton'/40, l='MpServer', x=-217,50, y=27,00, z=510,50]]
+	Retry entities: 0 total; []
+	Server brand: eagler
+	Server type: Non-integrated multiplayer server
+Stacktrace:
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:496)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:1144)
+	at net.minecraft.client.main.Main.appMain(Main.java:35)
+	at net.lax1dude.eaglercraft.v1_8.internal.lwjgl.LWJGLEntryPoint.main_(LWJGLEntryPoint.java:74)
+	at net.lax1dude.eaglercraft.v1_8.internal.lwjgl.MainClass.main(MainClass.java:6)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.8
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 17.0.12, Eclipse Adoptium
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode, sharing), Eclipse Adoptium
+	Memory: 284871952 bytes (271 MB) / 497025024 bytes (474 MB) up to 4223664128 bytes (4028 MB)
+	Launched Version: 1.8.8
+	LWJGL: EagRuntimeX 1.0
+	OpenGL: ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 Laptop GPU (0x00002560) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.15.6590) GL version OpenGL ES 3.0.0 (ANGLE 2.1.22784 git hash: c67f290ef0f0), Google Inc. (NVIDIA)
+	Is Eagler Shaders: No
+	Is Dynamic Lights: No
+	In Ext. Pipeline: No
+	GPU Shader5 Capable: No
+	GPU TexStorage Capable: Yes
+	GPU TextureLOD Capable: Yes
+	GPU Instancing Capable: Yes
+	GPU VAO Capable: Yes
+	Is Software VAOs: No
+	GPU Render-to-MipMap: No
+	Touch Mode: No
+	Is Modded: Definitely Not; You're an eagler
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)

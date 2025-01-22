@@ -1,0 +1,64 @@
+---- Minecraft Crash Report ----
+// eagler
+
+Time: 17.01.2025 12:34
+Description: Ticking screen
+
+java.lang.IllegalStateException: Server is in state -2 'WORLD_WORKER_NOT_RUNNING' which is not the 'WORLD_NONE' state for the requested IPC operation
+	at net.lax1dude.eaglercraft.v1_8.sp.SingleplayerServerController.ensureReady(SingleplayerServerController.java:192)
+	at net.lax1dude.eaglercraft.v1_8.sp.SingleplayerServerController.importWorld(SingleplayerServerController.java:465)
+	at net.lax1dude.eaglercraft.v1_8.sp.gui.GuiScreenNameWorldImport.updateScreen(GuiScreenNameWorldImport.java:62)
+	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1269)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:2185)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:1125)
+	at net.minecraft.client.main.Main.appMain(Main.java:35)
+	at net.lax1dude.eaglercraft.v1_8.internal.lwjgl.LWJGLEntryPoint.main_(LWJGLEntryPoint.java:74)
+	at net.lax1dude.eaglercraft.v1_8.internal.lwjgl.MainClass.main(MainClass.java:6)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at net.lax1dude.eaglercraft.v1_8.sp.SingleplayerServerController.ensureReady(SingleplayerServerController.java:192)
+	at net.lax1dude.eaglercraft.v1_8.sp.SingleplayerServerController.importWorld(SingleplayerServerController.java:465)
+	at net.lax1dude.eaglercraft.v1_8.sp.gui.GuiScreenNameWorldImport.updateScreen(GuiScreenNameWorldImport.java:62)
+	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1269)
+
+-- Affected screen --
+Details:
+	Screen name: net.lax1dude.eaglercraft.v1_8.sp.gui.GuiScreenNameWorldImport
+Stacktrace:
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:2185)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:1125)
+	at net.minecraft.client.main.Main.appMain(Main.java:35)
+	at net.lax1dude.eaglercraft.v1_8.internal.lwjgl.LWJGLEntryPoint.main_(LWJGLEntryPoint.java:74)
+	at net.lax1dude.eaglercraft.v1_8.internal.lwjgl.MainClass.main(MainClass.java:6)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.8
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 17.0.12, Eclipse Adoptium
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode, sharing), Eclipse Adoptium
+	Memory: 129852144 bytes (123 MB) / 270532608 bytes (258 MB) up to 4223664128 bytes (4028 MB)
+	Launched Version: 1.8.8
+	LWJGL: EagRuntimeX 1.0
+	OpenGL: ANGLE (NVIDIA, NVIDIA GeForce RTX 3060 Laptop GPU (0x00002560) Direct3D11 vs_5_0 ps_5_0, D3D11-32.0.15.6590) GL version OpenGL ES 3.0.0 (ANGLE 2.1.22784 git hash: c67f290ef0f0), Google Inc. (NVIDIA)
+	Is Eagler Shaders: No
+	Is Dynamic Lights: No
+	In Ext. Pipeline: No
+	GPU Shader5 Capable: No
+	GPU TexStorage Capable: Yes
+	GPU TextureLOD Capable: Yes
+	GPU Instancing Capable: Yes
+	GPU VAO Capable: Yes
+	Is Software VAOs: No
+	GPU Render-to-MipMap: No
+	Touch Mode: No
+	Is Modded: Definitely Not; You're an eagler
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
