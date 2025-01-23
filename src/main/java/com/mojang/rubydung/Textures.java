@@ -1,76 +1,90 @@
 package com.mojang.rubydung;
 
-import org.teavm.jso.dom.html.HTMLCanvasElement;
-import org.teavm.jso.dom.html.HTMLDocument;
-import org.teavm.jso.dom.html.HTMLImageElement;
-import org.teavm.jso.typedarrays.Uint8Array;
-import org.teavm.jso.webgl.WebGLRenderingContext;
-import org.teavm.jso.webgl.WebGLTexture;
-import org.teavm.jso.canvas.CanvasRenderingContext2D;
+import org.lwjgl.BufferUtils;
 
-import java.util.HashMap;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
 
-import static com.mojang.rubydung.RubyDung.jsconsolelog;
-
+import static org.lwjgl.opengl.GL11.*;
 
 public class Textures {
-	private static HashMap<String, WebGLTexture> idMap = new HashMap<>();
 
-	public static void loadTexture(WebGLRenderingContext gl, String imageUrl, int mode, TextureCallback callback) {
-		HTMLImageElement img = (HTMLImageElement) HTMLDocument.current().createElement("img");
-		img.setCrossOrigin("anonymous");
-		img.setSrc(imageUrl);
+    private static int lastId = Integer.MIN_VALUE;
 
-		if (img == null){
-			throw new RuntimeException("Hlllll null");
-		}
+    /**
+     * Load a texture into OpenGL
+     *
+     * @param resourceName Resource path of the image (must be raw RGBA format)
+     * @param width        Texture width
+     * @param height       Texture height
+     * @param mode         Texture filter mode (GL_NEAREST, GL_LINEAR)
+     * @return Texture id of OpenGL
+     */
+    public static int loadTexture(String resourceName, int width, int height, int mode) {
+        // Generate a new texture id
+        int id = glGenTextures();
 
-		img.addEventListener("load", evt -> {
-			//jsconsolelog("Hlello");
-			HTMLCanvasElement canvas = (HTMLCanvasElement) HTMLDocument.current().createElement("canvas");
-			canvas.setWidth(img.getWidth());
-			canvas.setHeight(img.getHeight());
-			CanvasRenderingContext2D ctx = (CanvasRenderingContext2D) canvas.getContext("2d");
+        // Bind this texture id
+        bind(id);
 
-			if (ctx == null) {
-				throw new RuntimeException("CanvasRenderingContext2D is null. WebGL rendering cannot proceed.");
-			}
+        // Set texture filter mode
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mode);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mode);
 
-			ctx.drawImage(img, 0, 0);
-			Uint8Array pixelData = Uint8Array.create(ctx.getImageData(0, 0, img.getWidth(), img.getHeight()).getData());
+        // Load raw RGBA data from resource
+        ByteBuffer pixelBuffer = readTextureData(resourceName, width, height);
 
-			if (pixelData == null){
-				throw new RuntimeException("Hellllooooo nulllll");
-			}
+        // Upload texture to OpenGL
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixelBuffer);
 
-			WebGLTexture texture = gl.createTexture();
-			gl.bindTexture(WebGLRenderingContext.TEXTURE_2D, texture);
-			gl.texImage2D(WebGLRenderingContext.TEXTURE_2D, 0, WebGLRenderingContext.RGBA, img.getWidth(), img.getHeight(), 0, WebGLRenderingContext.RGBA, WebGLRenderingContext.UNSIGNED_BYTE, pixelData);
-			gl.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_MIN_FILTER, mode);
-			gl.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_MAG_FILTER, mode);
-			gl.generateMipmap(WebGLRenderingContext.TEXTURE_2D);
+        return id;
+    }
 
-			if(gl == null){
-				throw new RuntimeException("nuuullllll");
-			}
+    /**
+     * Bind the texture to OpenGL using the id from {@link #loadTexture(String, int, int, int)}
+     *
+     * @param id Texture id
+     */
+    public static void bind(int id) {
+        if (id != lastId) {
+            glBindTexture(GL_TEXTURE_2D, id);
+            lastId = id;
+        }
+    }
 
-			idMap.put(imageUrl, texture);
-			callback.onTextureLoaded(texture);
-		});
+    /**
+     * Reads texture data from a resource file.
+     *
+     * @param resourceName Resource path
+     * @param width        Expected texture width
+     * @param height       Expected texture height
+     * @return A ByteBuffer containing the texture data
+     */
+    private static ByteBuffer readTextureData(String resourceName, int width, int height) {
+        try (InputStream inputStream = Textures.class.getResourceAsStream(resourceName)) {
+            if (inputStream == null) {
+                throw new IOException("Resource not found: " + resourceName);
+            }
 
-		img.addEventListener("load", evt -> {
-			jsconsolelog("fail" + imageUrl);
-		});
+            // Calculate the expected size of the texture (RGBA format: 4 bytes per pixel)
+            int expectedSize = width * height * 4;
+            byte[] pixelData = new byte[expectedSize];
 
+            // Read the image data into the array
+            int bytesRead = inputStream.read(pixelData);
+            if (bytesRead != expectedSize) {
+                throw new IOException("Invalid texture data size: expected " + expectedSize + ", but got " + bytesRead);
+            }
 
-		img.addEventListener("error", evt -> {
-			throw new RuntimeException("Failed to load texture from URL: " + imageUrl);
-		});
-	}
+            // Wrap the pixel data in a ByteBuffer
+            ByteBuffer buffer = BufferUtils.createByteBuffer(expectedSize);
+            buffer.put(pixelData);
+            buffer.flip(); // Prepare the buffer for reading
 
-
-	// Callback interface for asynchronous texture loading
-	public interface TextureCallback {
-		void onTextureLoaded(WebGLTexture texture);
-	}
+            return buffer;
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load texture: " + resourceName, e);
+        }
+    }
 }

@@ -89,7 +89,7 @@ public class Tessellator {
 	/** The size of the buffers used (in integers). */
 	private int bufferSize;
 
-	private Tessellator(int par1) {
+	public Tessellator(int par1) {
 		this.bufferSize = par1;
 		ArrayBuffer a = ArrayBuffer.create(par1 * 4);
 		this.intBuffer = Int32Array.create(a);

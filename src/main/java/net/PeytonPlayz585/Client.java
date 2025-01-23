@@ -13,7 +13,6 @@ import org.teavm.jso.dom.html.HTMLElement;
 
 import net.PeytonPlayz585.opengl.LWJGLMain;
 
-import static com.mojang.rubydung.RubyDung.jsconsolelog;
 
 public class Client {
 	
@@ -28,7 +27,6 @@ public class Client {
 
 	public static void run0() {
 		RubyDung rubyDung = new RubyDung();
-		rubyDung.run();
 	}
 
 }
