@@ -10,6 +10,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
+import javax.swing.*;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
@@ -103,6 +104,8 @@ public class RubyDung implements Runnable {
             init();
         } catch (Exception e) {
             // Show error message dialog and stop the game
+            JOptionPane.showMessageDialog(null, e, "Failed to start RubyDung", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
         }
 
         // To keep track of framerate
@@ -129,7 +132,7 @@ public class RubyDung implements Runnable {
                 // Loop if a second passed
                 while (System.currentTimeMillis() >= lastTime + 1000L) {
                     // Print amount of frames
-                    //System.out.println(frames + " fps, " + Chunk.updates);
+                    System.out.println(frames + " fps, " + Chunk.updates);
 
                     // Reset global rebuild stats
                     Chunk.updates = 0;
@@ -237,7 +240,8 @@ public class RubyDung implements Runnable {
         // Reset select buffer
         this.selectBuffer.clear();
 
-
+        glSelectBuffer(this.selectBuffer);
+        glRenderMode(GL_SELECT);
 
         // Setup pick camera
         this.setupPickCamera(partialTicks, this.width / 2, this.height / 2);
@@ -254,7 +258,7 @@ public class RubyDung implements Runnable {
         int hitNameCount = 0;
 
         // Get amount of hits
-        int hits = (GL_RENDER);
+        int hits = glRenderMode(GL_RENDER);
         for (int hitIndex = 0; hitIndex < hits; hitIndex++) {
 
             // Get name count

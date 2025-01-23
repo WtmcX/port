@@ -147,33 +147,43 @@ public class LevelRenderer implements LevelListener {
         int minZ = (int) boundingBox.minZ;
         int maxZ = (int) (boundingBox.maxZ + 1.0f);
 
+        glInitNames();
         for (int x = minX; x < maxX; x++) {
             // Name value x
+            glPushName(x);
             for (int y = minY; y < maxY; y++) {
                 // Name value y
+                glPushName(y);
                 for (int z = minZ; z < maxZ; z++) {
                     // Name value z
+                    glPushName(z);
 
                     // Check for solid tile
                     if (this.level.isSolidTile(x, y, z)) {
 
                         // Name value type
+                        glPushName(0);
 
                         // Render all faces
                         for (int face = 0; face < 6; face++) {
 
                             // Name value face id
-
+                            glPushName(face);
 
                             // Render selection face
                             this.tessellator.init();
                             Tile.rock.renderFace(this.tessellator, x, y, z, face);
                             this.tessellator.flush();
 
+                            glPopName();
                         }
+                        glPopName();
                     }
+                    glPopName();
                 }
+                glPopName();
             }
+            glPopName();
         }
     }
 

@@ -8,8 +8,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Chunk {
 
-    // terrain.png yerine uygun bir ham RGBA formatlı görüntü dosyası kullanın.
-    private static final int TEXTURE = Textures.loadTexture("/terrain.rgba", 256, 256, GL_NEAREST);
+    private static final int TEXTURE = Textures.loadTexture("/terrain.png", GL_NEAREST);
     private static final Tessellator TESSELLATOR = new Tessellator();
 
     /**

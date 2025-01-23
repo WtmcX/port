@@ -89,9 +89,12 @@ public class Tessellator {
         this.textureCoordinateBuffer.flip();
 
         // Set points
+        glVertexPointer(3, GL_POINTS, this.vertexBuffer);
         if (this.hasTexture) {
+            glTexCoordPointer(2, GL_POINTS, this.textureCoordinateBuffer);
         }
         if (this.hasColor) {
+            glColorPointer(3, GL_POINTS, this.colorBuffer);
         }
 
         // Enable client states
